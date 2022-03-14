@@ -1,5 +1,6 @@
-// Load Main Container
-const main = document.getElementById('mainContainer');
+// Load Containers
+const main          = document.getElementById('mainContainer');
+
 
 
 // Search work
@@ -8,7 +9,7 @@ const searchButton = () =>{
     const error = document.getElementById('error');
     const inputValue = input.value;
     if(inputValue ==""){
-        error.innerText = 'Please give Phone Name';
+        error.innerText = 'Please give Phone Name or Model';
         input.value = '';
         main.innerHTML = '';
 
@@ -35,10 +36,40 @@ const phoneDisplay = (phones) =>{
             <h6 class="card-title">brand Name: ${phone.brand}</h6>
             <h5 class="card-title">Phone Name: ${phone.phone_name}</h5>            
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="${phone.slug}" class="btn btn-primary">Phone Details</a>
+            <button onclick="loadPhoneDetail('${phone.slug}')" class="btn btn-primary">Phone Details</button>
             </div>
         </div>
         `;
         main.appendChild(div);
+
     }
+}
+
+
+
+
+const loadPhoneDetail= phoneId =>{
+    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayPhoneDetail(data.data));
+
+}
+
+const displayPhoneDetail = phone => {
+    const detailsMain   = document.getElementById('detailsContainer');
+    const div = document.createElement('div');
+    main.innerHTML = '';
+    div.classList.add('col');
+    div.classList.add('text-center');
+    div.innerHTML = `
+        <img src="${phone.image}" class="card-img-top w-25" alt="${phone.name}">
+        <div class="card-body">
+        <h5 class="card-title">${phone.name}</h5>
+        <p class="card-text">${phone.releaseDate}</p>        
+        </div>
+    `;
+    detailsMain.appendChild(div);
+
+
 }
