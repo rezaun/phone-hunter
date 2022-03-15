@@ -1,5 +1,5 @@
 // Load Containers
-const main          = document.getElementById('mainContainer');
+const main = document.getElementById('mainContainer');
 
 
 
@@ -45,9 +45,6 @@ const phoneDisplay = (phones) =>{
     }
 }
 
-
-
-
 const loadPhoneDetail= phoneId =>{
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
     fetch(url)
@@ -59,17 +56,19 @@ const loadPhoneDetail= phoneId =>{
 const displayPhoneDetail = phone => {
     const detailsMain   = document.getElementById('detailsContainer');
     const div = document.createElement('div');
-    main.innerHTML = '';
+    
     div.classList.add('col');
     div.classList.add('text-center');
     div.innerHTML = `
         <img src="${phone.image}" class="card-img-top w-25" alt="${phone.name}">
         <div class="card-body">
-        <h5 class="card-title">${phone.name}</h5>
-        <p class="card-text">${phone.releaseDate}</p>        
-        </div>
+        <h4>Phone Others Options</h4>
+        <h5 class="card-title">Phone Name:<b> ${phone.name}</b></h5>
+        <pclass="card-text">Phone USB:<b> ${phone.others.USB}</b></p>
+        <p class="card-text">BlueTooth:<b> ${phone.others.Bluetooth}</b> </p>
+        <p class="card-text">Radio:<b> ${phone.others.Radio}</b></p>
+        <p>Release Date <b>${phone.releaseDate ? phone.releaseDate : 'No release Date Found'} </b></p>       
     `;
     detailsMain.appendChild(div);
-
 
 }
